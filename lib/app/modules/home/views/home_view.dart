@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:polsterhof_auftrag/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -13,27 +12,119 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF Flutter'),
+        title: Text('Polsterhof-PDF'),
         centerTitle: true,
       ),
-      body: Container(
-          width: Get.width,
-          height: Get.height,
-          child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+              /*  width: Get.width,
+              height: Get.height, */
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("PDF TUTORIAL"),
+              Text(
+                "Auftragsannahme",
+                style: TextStyle(fontSize: 40),
+              ),
+              TextFormField(
+                controller: controller.namet,
+                decoration: InputDecoration(
+                  labelText: "Name",
+                ),
+              ),
+              TextFormField(
+                controller: controller.adresset,
+                decoration: InputDecoration(
+                  labelText: "Adresse",
+                ),
+              ),
+              TextFormField(
+                controller: controller.telefont,
+                decoration: InputDecoration(
+                  labelText: "Telefon",
+                ),
+              ),
+              TextFormField(
+                controller: controller.abholdatumt,
+                decoration: InputDecoration(
+                  labelText: "Abholdatum",
+                ),
+              ),
+              TextFormField(
+                controller: controller.lieferdatumt,
+                decoration: InputDecoration(
+                  labelText: "Lieferdatum",
+                ),
+              ),
+              TextFormField(
+                controller: controller.firmamaterialt,
+                decoration: InputDecoration(
+                  labelText: "Firmamaterial",
+                ),
+              ),
+              TextFormField(
+                controller: controller.stoffmetert,
+                decoration: InputDecoration(
+                  labelText: "Stoffmeter",
+                ),
+              ),
+              TextFormField(
+                controller: controller.ledert,
+                decoration: InputDecoration(
+                  labelText: "Leder",
+                ),
+              ),
+              TextFormField(
+                controller: controller.bestelltt,
+                decoration: InputDecoration(
+                  labelText: "Bestellt",
+                ),
+              ),
+              TextFormField(
+                controller: controller.preist,
+                decoration: InputDecoration(
+                  labelText: "Preis",
+                ),
+              ),
+              TextFormField(
+                controller: controller.wasmachent,
+                decoration: InputDecoration(
+                  labelText: "Was machen",
+                ),
+              ),
+              TextFormField(
+                maxLines: 5,
+                controller: controller.notizt,
+                decoration: InputDecoration(
+                  labelText: "NOTIZ",
+                ),
+              ),
             ],
           )),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Directory documentDirectory =
               await getApplicationDocumentsDirectory();
           String documentPath = documentDirectory.path;
-          controller.writeonPdf();
-          await controller.savePdf();
-          String fullPath = "$documentPath/example.pdf";
-          Get.toNamed(Routes.PDFVIEWER, arguments: fullPath);
+
+          controller.writeonPdf(
+            controller.namet.text,
+            controller.adresset.text,
+            controller.telefont.text,
+            controller.abholdatumt.text,
+            controller.lieferdatumt.text,
+            controller.firmamaterialt.text,
+            controller.stoffmetert.text,
+            controller.ledert.text,
+            controller.bestelltt.text,
+            controller.preist.text,
+            controller.wasmachent.text,
+            controller.notizt.text,
+          );
         },
         child: Icon(Icons.save),
         //Test
