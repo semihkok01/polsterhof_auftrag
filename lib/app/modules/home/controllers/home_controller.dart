@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +10,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class HomeController extends GetxController {
+  late var dosyaAdresi1 = "".obs;
+  late var dosyaAdresi2 = "".obs;
+  var directoryss = "".obs;
+
   final pdf = pw.Document();
   TextEditingController namet = TextEditingController();
   TextEditingController adresset = TextEditingController();
@@ -24,6 +28,25 @@ class HomeController extends GetxController {
   TextEditingController wasmachent = TextEditingController();
   TextEditingController notizt = TextEditingController();
 
+  late final image = pw.MemoryImage(
+    File(dosyaAdresi1.value).readAsBytesSync(),
+  );
+  late final image2 = pw.MemoryImage(
+    File(dosyaAdresi2.value).readAsBytesSync(),
+  );
+
+  getDirectory() async {
+    String dir = Directory.current.path;
+    dir.replaceAll(r"\", "/");
+
+    //directoryss.value = dir;
+    dosyaAdresi1.value = dir.toString() + "/bild2.png";
+    dosyaAdresi2.value = dir.toString() + "/bild2.png";
+    print(dir);
+    print(dosyaAdresi1.value);
+    print(dosyaAdresi2.value);
+  }
+
   writeonPdf(String name, adresse, telefon, abholdatum, lieferdatum,
       firmamaterial, stoffmeter, leder, bestellt, preis, wasmachen, notiz) {
     pdf.addPage(pw.MultiPage(
@@ -35,44 +58,86 @@ class HomeController extends GetxController {
                 style: const pw.TextStyle(
                   fontSize: 40,
                 )),
-            pw.Paragraph(text: "Name"),
+            pw.Divider(thickness: 1),
+            pw.Paragraph(text: "Name:"),
             pw.Text(name.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Adresse"),
+            pw.Paragraph(text: "Adresse:"),
             pw.Text(adresse.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Telefon"),
+            pw.Paragraph(text: "Telefon:"),
             pw.Text(telefon.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Abholdatum"),
-            pw.Text(abholdatum.toString()),
+            pw.Paragraph(text: "Abholdatum - Lieferdatum:"),
+            pw.Text(abholdatum.toString() + lieferdatum.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Lieferdatum"),
-            pw.Text(lieferdatum.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Firmamaterial"),
+            pw.Paragraph(text: "Firma/Material:"),
             pw.Text(firmamaterial.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Stoffmeter"),
+            pw.Paragraph(text: "Stoff-Meter:"),
             pw.Text(stoffmeter.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Leder"),
+            pw.Paragraph(text: "Leder:"),
             pw.Text(leder.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Bestellt"),
+            pw.Paragraph(text: "Bestellt am:"),
             pw.Text(bestellt.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Preis"),
+            pw.Paragraph(text: "Preis:"),
             pw.Text(preis.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Was machen"),
+            pw.Paragraph(text: "Was machen:"),
             pw.Text(wasmachen.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Notiz"),
+            pw.Paragraph(text: "Notiz:"),
             pw.Text(notiz.toString()),
+            pw.Divider(thickness: 1),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+              pw.Image(image, width: 250, height: 250),
+              pw.SizedBox(width: 10),
+              pw.Image(image2, width: 250, height: 250),
+            ]),
           ];
         }));
     savePdf();
+  }
+
+  getFileAdress() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Lütfen Dosya Seciniz",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi1.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
+  getFileAdress2() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Lütfen Dosya Seciniz",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi2.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
+  adressDegis(String gelen) {
+    String giden = gelen.replaceAll(r"\", "/");
+    // ignore: avoid_print
+    print(giden);
   }
 
   Future savePdf() async {
@@ -96,7 +161,8 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    await getDirectory();
     super.onInit();
   }
 

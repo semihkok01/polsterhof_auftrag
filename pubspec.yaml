@@ -14,7 +14,7 @@ dependencies:
   path_provider: ^2.0.9
   intl: ^0.17.0
   printing: ^5.7.5
-
+  file_picker: ^4.5.1
 dev_dependencies: 
   flutter_lints: ^1.0.0
   flutter_test: 

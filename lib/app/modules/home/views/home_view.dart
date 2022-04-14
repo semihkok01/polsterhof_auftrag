@@ -31,76 +31,114 @@ class HomeView extends GetView<HomeController> {
               TextFormField(
                 controller: controller.namet,
                 decoration: InputDecoration(
-                  labelText: "Name",
+                  labelText: "Name:",
                 ),
               ),
               TextFormField(
                 controller: controller.adresset,
                 decoration: InputDecoration(
-                  labelText: "Adresse",
+                  labelText: "Adresse:",
                 ),
               ),
               TextFormField(
                 controller: controller.telefont,
                 decoration: InputDecoration(
-                  labelText: "Telefon",
+                  labelText: "Telefon:",
                 ),
               ),
               TextFormField(
                 controller: controller.abholdatumt,
                 decoration: InputDecoration(
-                  labelText: "Abholdatum",
+                  labelText: "Abholdatum:",
                 ),
               ),
               TextFormField(
                 controller: controller.lieferdatumt,
                 decoration: InputDecoration(
-                  labelText: "Lieferdatum",
+                  labelText: "Lieferdatum:",
                 ),
               ),
               TextFormField(
                 controller: controller.firmamaterialt,
                 decoration: InputDecoration(
-                  labelText: "Firmamaterial",
+                  labelText: "Firma-Material:",
                 ),
               ),
               TextFormField(
                 controller: controller.stoffmetert,
                 decoration: InputDecoration(
-                  labelText: "Stoffmeter",
+                  labelText: "Stoff-Meter:",
                 ),
               ),
               TextFormField(
                 controller: controller.ledert,
                 decoration: InputDecoration(
-                  labelText: "Leder",
+                  labelText: "Leder:",
                 ),
               ),
               TextFormField(
                 controller: controller.bestelltt,
                 decoration: InputDecoration(
-                  labelText: "Bestellt",
+                  labelText: "Bestellt am:",
                 ),
               ),
               TextFormField(
                 controller: controller.preist,
                 decoration: InputDecoration(
-                  labelText: "Preis",
+                  labelText: "Preis:",
                 ),
               ),
               TextFormField(
                 controller: controller.wasmachent,
                 decoration: InputDecoration(
-                  labelText: "Was machen",
+                  labelText: "Was machen:",
                 ),
               ),
               TextFormField(
                 maxLines: 5,
                 controller: controller.notizt,
-                decoration: InputDecoration(
-                  labelText: "NOTIZ",
+                decoration: const InputDecoration(
+                  labelText: "NOTIZ:",
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        controller.getFileAdress();
+                      },
+                      child: Obx(() => Column(
+                            children: [
+                              Text("Image 1"),
+                              Image.file(
+                                File(controller.dosyaAdresi1.value),
+                                height: 500.0,
+                                width: 500.0,
+                              ),
+                            ],
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        controller.getFileAdress2();
+                      },
+                      child: Obx(() => Column(
+                            children: [
+                              Text("Image 2"),
+                              Image.file(
+                                File(controller.dosyaAdresi2.value),
+                                height: 500.0,
+                                width: 500.0,
+                              ),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+              )
             ],
           )),
         ),
