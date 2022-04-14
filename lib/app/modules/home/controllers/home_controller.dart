@@ -40,8 +40,8 @@ class HomeController extends GetxController {
     dir.replaceAll(r"\", "/");
 
     //directoryss.value = dir;
-    dosyaAdresi1.value = dir.toString() + "/bild2.png";
-    dosyaAdresi2.value = dir.toString() + "/bild2.png";
+    dosyaAdresi1.value = dir.toString() + "/bild/bild2.png";
+    dosyaAdresi2.value = dir.toString() + "/bild/bild2.png";
     print(dir);
     print(dosyaAdresi1.value);
     print(dosyaAdresi2.value);
