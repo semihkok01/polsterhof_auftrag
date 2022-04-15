@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/fehler/bindings/fehler_binding.dart';
+import '../modules/fehler/views/fehler_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-
 
 part 'app_routes.dart';
 
@@ -17,6 +18,10 @@ class AppPages {
       page: () => HomeView(),
       binding: HomeBinding(),
     ),
-
+    GetPage(
+      name: _Paths.FEHLER,
+      page: () => FehlerView(),
+      binding: FehlerBinding(),
+    ),
   ];
 }

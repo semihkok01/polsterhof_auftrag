@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:polsterhof_auftrag/app/routes/app_pages.dart';
 
 import 'package:printing/printing.dart';
 
@@ -54,9 +56,10 @@ class HomeController extends GetxController {
         margin: pw.EdgeInsets.all(8),
         build: (pw.Context context) {
           return <pw.Widget>[
-            pw.Text('Auftragannahme',
+            pw.Text('Polsterhof-Auftragannahme',
+                textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
                 )),
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Name:"),
@@ -149,7 +152,7 @@ class HomeController extends GetxController {
     String date = formatter.format(now);
 
     File file =
-        File("C:/Users/Semih/Desktop/Polsterhof/PA-" + namet.text + ".pdf");
+        File("C:/Users/burqm/Desktop/Polsterhof/PA-" + namet.text + ".pdf");
     file.writeAsBytesSync(List.from(await pdf.save()));
 /*     await Printing.layoutPdf(
       onLayout: (PdfPageFormat format) async => pdf.save()); */

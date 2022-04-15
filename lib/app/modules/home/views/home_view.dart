@@ -112,7 +112,7 @@ class HomeView extends GetView<HomeController> {
                       },
                       child: Obx(() => Column(
                             children: [
-                              Text("Image 1"),
+                              Text("Bild 1"),
                               Image.file(
                                 File(controller.dosyaAdresi1.value),
                                 height: 500.0,
@@ -127,7 +127,7 @@ class HomeView extends GetView<HomeController> {
                       },
                       child: Obx(() => Column(
                             children: [
-                              Text("Image 2"),
+                              Text("Bild 2"),
                               Image.file(
                                 File(controller.dosyaAdresi2.value),
                                 height: 500.0,
