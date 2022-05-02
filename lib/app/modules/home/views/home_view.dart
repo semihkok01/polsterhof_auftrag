@@ -63,19 +63,7 @@ class HomeView extends GetView<HomeController> {
                 TextFormField(
                   controller: controller.firmamaterialt,
                   decoration: InputDecoration(
-                    labelText: "Firma-Material:",
-                  ),
-                ),
-                TextFormField(
-                  controller: controller.stoffmetert,
-                  decoration: InputDecoration(
-                    labelText: "Stoff-Meter:",
-                  ),
-                ),
-                TextFormField(
-                  controller: controller.ledert,
-                  decoration: InputDecoration(
-                    labelText: "Leder:",
+                    labelText: "Material:",
                   ),
                 ),
                 TextFormField(
@@ -105,41 +93,121 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          controller.getFileAdress();
-                        },
-                        child: Obx(() => Column(
-                              children: [
-                                Text("Bild 1"),
-                                Image.file(
-                                  File(controller.dosyaAdresi1.value),
-                                  height: Get.height * 0.2,
-                                  width: Get.width * 0.2,
-                                ),
-                              ],
-                            )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Material"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi1.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress2();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Objekt"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi2.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 40,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress3();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Bild 1"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi3.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress4();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Bild 2"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi4.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
                       ),
-                      InkWell(
-                        onTap: () {
-                          controller.getFileAdress2();
-                        },
-                        child: Obx(() => Column(
-                              children: [
-                                Text("Bild 2"),
-                                Image.file(
-                                  File(controller.dosyaAdresi2.value),
-                                  height: Get.height * 0.2,
-                                  width: Get.width * 0.2,
-                                ),
-                              ],
-                            )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress5();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Bild 3"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi5.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              controller.getFileAdress6();
+                            },
+                            child: Obx(() => Column(
+                                  children: [
+                                    Text("Bild 4"),
+                                    Image.file(
+                                      File(controller.dosyaAdresi6.value),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.2,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -177,15 +245,13 @@ class HomeView extends GetView<HomeController> {
               controller.abholdatumt.text,
               controller.lieferdatumt.text,
               controller.firmamaterialt.text,
-              controller.stoffmetert.text,
-              controller.ledert.text,
               controller.bestelltt.text,
               controller.preist.text,
               controller.wasmachent.text,
               controller.notizt.text,
             );
 
-            Get.defaultDialog(
+            /* Get.defaultDialog(
               title: "Ohne Preis Ausdrucken ? ",
               content: Container(
                 child: Column(
@@ -219,7 +285,7 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-            );
+            ); */
           },
 
           child: Icon(Icons.save),

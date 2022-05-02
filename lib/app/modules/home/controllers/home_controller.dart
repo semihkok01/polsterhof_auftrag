@@ -21,6 +21,13 @@ class HomeController extends GetxController {
 
   late var dosyaAdresi1 = "".obs;
   late var dosyaAdresi2 = "".obs;
+  late var dosyaAdresi3 = "".obs;
+
+  late var dosyaAdresi4 = "".obs;
+
+  late var dosyaAdresi5 = "".obs;
+  late var dosyaAdresi6 = "".obs;
+
   var directoryss = "".obs;
 
   final pdf = pw.Document();
@@ -30,8 +37,7 @@ class HomeController extends GetxController {
   TextEditingController abholdatumt = TextEditingController();
   TextEditingController lieferdatumt = TextEditingController();
   TextEditingController firmamaterialt = TextEditingController();
-  TextEditingController stoffmetert = TextEditingController();
-  TextEditingController ledert = TextEditingController();
+
   TextEditingController bestelltt = TextEditingController();
   TextEditingController preist = TextEditingController();
   TextEditingController wasmachent = TextEditingController();
@@ -41,6 +47,18 @@ class HomeController extends GetxController {
     File(dosyaAdresi1.value).readAsBytesSync(),
   );
   late final image2 = pw.MemoryImage(
+    File(dosyaAdresi2.value).readAsBytesSync(),
+  );
+  late final image3 = pw.MemoryImage(
+    File(dosyaAdresi2.value).readAsBytesSync(),
+  );
+  late final image4 = pw.MemoryImage(
+    File(dosyaAdresi2.value).readAsBytesSync(),
+  );
+  late final image5 = pw.MemoryImage(
+    File(dosyaAdresi2.value).readAsBytesSync(),
+  );
+  late final image6 = pw.MemoryImage(
     File(dosyaAdresi2.value).readAsBytesSync(),
   );
 
@@ -64,6 +82,11 @@ class HomeController extends GetxController {
     String bildadress = dir.replaceAll(r"\", "/");
     dosyaAdresi1.value = bildadress + "/bild/bild2.png";
     dosyaAdresi2.value = bildadress + "/bild/bild2.png";
+    dosyaAdresi3.value = bildadress + "/bild/bild2.png";
+    dosyaAdresi4.value = bildadress + "/bild/bild2.png";
+    dosyaAdresi5.value = bildadress + "/bild/bild2.png";
+    dosyaAdresi6.value = bildadress + "/bild/bild2.png";
+
     print(dir);
     //print(dosyaAdresi1.value);
     //print(dosyaAdresi2.value);
@@ -81,19 +104,8 @@ class HomeController extends GetxController {
     print(filepath);
   }
 
-  writeonPdf(
-      String name,
-      adresse,
-      telefon,
-      abholdatum,
-      lieferdatum,
-      firmamaterial,
-      stoffmeter,
-      leder,
-      bestellt,
-      preis,
-      wasmachen,
-      notiz) async {
+  writeonPdf(String name, adresse, telefon, abholdatum, lieferdatum,
+      firmamaterial, bestellt, preis, wasmachen, notiz) async {
     String actualDate = formatterDate.format(now);
     String actualTime = formatterTime.format(now);
 
@@ -102,12 +114,49 @@ class HomeController extends GetxController {
         margin: pw.EdgeInsets.all(8),
         build: (pw.Context context) {
           return <pw.Widget>[
+            /*   pw.Watermark(
+              child: pw.Image(image2, width: 250, height: 250),
+            ), */
             pw.Text(
                 'Polsterhof-Auftragannahme ' + actualDate + "-" + actualTime,
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(
                   fontSize: 25,
                 )),
+            pw.Row(children: [
+              pw.Container(
+                width: 170,
+                child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Paragraph(text: "Name:"),
+                      pw.Text(name.toString()),
+                    ]),
+              ),
+              pw.Container(
+                width: 170,
+                child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Paragraph(text: "Adresse:"),
+                      pw.Text(adresse.toString()),
+                    ]),
+              ),
+              pw.Container(
+                width: 170,
+                child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Paragraph(text: "Telefon:"),
+                      pw.Text(telefon.toString()),
+                    ]),
+              ),
+            ]),
+
+/* 
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Name:"),
             pw.Text(name.toString()),
@@ -116,19 +165,13 @@ class HomeController extends GetxController {
             pw.Text(adresse.toString()),
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Telefon:"),
-            pw.Text(telefon.toString()),
+            pw.Text(telefon.toString()), */
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Abholdatum - Lieferdatum:"),
-            pw.Text(abholdatum.toString() + lieferdatum.toString()),
+            pw.Text(abholdatum.toString() + " - " + lieferdatum.toString()),
             pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Firma/Material:"),
+            pw.Paragraph(text: "Material:"),
             pw.Text(firmamaterial.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Stoff-Meter:"),
-            pw.Text(stoffmeter.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Leder:"),
-            pw.Text(leder.toString()),
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Bestellt am:"),
             pw.Text(bestellt.toString()),
@@ -142,10 +185,54 @@ class HomeController extends GetxController {
             pw.Paragraph(text: "Notiz:"),
             pw.Text(notiz.toString()),
             pw.Divider(thickness: 1),
+            pw.SizedBox(height: 30),
+
+            pw.Column(children: [
+ pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+              pw.Column(children: [
+                pw.Text("Material"),
+                pw.Image(image, width: 250, height: 250),
+              ]),
+              pw.SizedBox(width: 30, height: 20),
+              pw.Column(children: [
+                pw.Text("Objekt"),
+                pw.Image(image2, width: 250, height: 250),
+              ]),
+
+
+
+
+            ]),
+
+
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Image(image, width: 250, height: 250),
-              pw.SizedBox(width: 10),
-              pw.Image(image2, width: 250, height: 250),
+              pw.Column(children: [
+                pw.Text("Material"),
+                pw.Image(image, width: 250, height: 250),
+              ]),
+              pw.SizedBox(width: 30, height: 20),
+              pw.Column(children: [
+                pw.Text("Objekt"),
+                pw.Image(image2, width: 250, height: 250),
+              ]),
+              pw.Column(children: [
+                pw.Text("Bild 1"),
+                pw.Image(image3, width: 250, height: 250),
+              ]),
+              pw.SizedBox(width: 30, height: 20),
+              pw.Column(children: [
+                pw.Text("Bild-2"),
+                pw.Image(image4, width: 250, height: 250),
+              ]),
+              pw.Column(children: [
+                pw.Text("Bild 3"),
+                pw.Image(image5, width: 250, height: 250),
+              ]),
+              pw.SizedBox(width: 30, height: 20),
+              pw.Column(children: [
+                pw.Text("Bild 4"),
+                pw.Image(image6, width: 250, height: 250),
+              ]),
             ]),
           ];
         }));
@@ -153,10 +240,11 @@ class HomeController extends GetxController {
     await savePdf(id);
   }
 
-  writeonPdfNull(String name, adresse, telefon, abholdatum, lieferdatum,
+/*   writeonPdfNull(String name, adresse, telefon, abholdatum, lieferdatum,
       firmamaterial, stoffmeter, leder, bestellt, wasmachen, notiz) async {
     String actualDate = formatterDate.format(now);
     String actualTime = formatterTime.format(now);
+
     pdf.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: pw.EdgeInsets.all(8),
@@ -198,17 +286,28 @@ class HomeController extends GetxController {
             pw.Paragraph(text: "Notiz:"),
             pw.Text(notiz.toString()),
             pw.Divider(thickness: 1),
+            
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
               pw.Image(image, width: 250, height: 250),
               pw.SizedBox(width: 10),
               pw.Image(image2, width: 250, height: 250),
+            ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+              pw.Image(image3, width: 250, height: 250),
+              pw.SizedBox(width: 10),
+              pw.Image(image4, width: 250, height: 250),
+            ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+              pw.Image(image5, width: 250, height: 250),
+              pw.SizedBox(width: 10),
+              pw.Image(image6, width: 250, height: 250),
             ]),
           ];
         }));
     String id = "OhnePreis";
     await savePdf(id);
   }
-
+ */
   getFileAdress() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -241,6 +340,70 @@ class HomeController extends GetxController {
     //print(dosyaAdresi1.value);
   }
 
+  getFileAdress3() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Bitte Image Auswählen",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi3.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
+  getFileAdress4() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Bitte Image Auswählen",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi4.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
+  getFileAdress5() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Bitte Image Auswählen",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi5.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
+  getFileAdress6() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      dialogTitle: "Bitte Image Auswählen",
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return;
+    PlatformFile file = result.files.single;
+    /*  String deneme = file.path!.replaceAll(r"\$", r"/"); */
+    dosyaAdresi6.value = file.path!;
+    //print(file.path);
+    adressDegis(file.path.toString());
+    //print(dosyaAdresi1.value);
+  }
+
   adressDegis(String gelen) {
     String giden = gelen.replaceAll(r"\", "/");
     print(giden);
@@ -266,8 +429,6 @@ class HomeController extends GetxController {
         bytes: await pdf.save(),
         filename: "${namet.text + actualDate + fileid}-P_Auftrag.pdf");
   }
-
-  
 
   /*  savePdf2() async {
     var now = DateTime.now();
@@ -296,8 +457,9 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
+    await getDirectory();
   }
 
   @override
