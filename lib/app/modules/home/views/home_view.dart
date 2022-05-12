@@ -13,10 +13,6 @@ class HomeView extends GetView<HomeController> {
     controller.getDirectory();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Polsterhof-PDF'),
-          centerTitle: true,
-        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),

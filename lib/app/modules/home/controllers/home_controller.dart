@@ -9,7 +9,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
+import 'package:polsterhof_auftrag/app/modules/home/views/home_view.dart';
+import 'package:polsterhof_auftrag/app/routes/app_pages.dart';
 import 'package:printing/printing.dart';
+
+import '../../../../main.dart';
 
 var depo = GetStorage();
 
@@ -30,7 +34,6 @@ class HomeController extends GetxController {
 
   var directoryss = "".obs;
 
-  final pdf = pw.Document();
   TextEditingController namet = TextEditingController();
   TextEditingController adresset = TextEditingController();
   TextEditingController telefont = TextEditingController();
@@ -106,12 +109,13 @@ class HomeController extends GetxController {
 
   writeonPdf(String name, adresse, telefon, abholdatum, lieferdatum,
       firmamaterial, bestellt, preis, wasmachen, notiz) async {
+    final pdf = pw.Document();
     String actualDate = formatterDate.format(now);
     String actualTime = formatterTime.format(now);
 
     pdf.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: pw.EdgeInsets.all(8),
+        margin: const pw.EdgeInsets.all(8),
         build: (pw.Context context) {
           return <pw.Widget>[
             /*   pw.Watermark(
@@ -186,58 +190,52 @@ class HomeController extends GetxController {
             pw.Text(notiz.toString()),
             pw.Divider(thickness: 1),
             pw.SizedBox(height: 30),
-
             pw.Column(children: [
- pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Column(children: [
-                pw.Text("Material"),
-                pw.Image(image, width: 250, height: 250),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Column(children: [
+                  pw.Text("Material"),
+                  pw.Image(image, width: 250, height: 250),
+                ]),
+                pw.SizedBox(width: 30, height: 20),
+                pw.Column(children: [
+                  pw.Text("Objekt"),
+                  pw.Image(image2, width: 250, height: 250),
+                ]),
               ]),
-              pw.SizedBox(width: 30, height: 20),
-              pw.Column(children: [
-                pw.Text("Objekt"),
-                pw.Image(image2, width: 250, height: 250),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Column(children: [
+                  pw.Text("Material"),
+                  pw.Image(image, width: 250, height: 250),
+                ]),
+                pw.SizedBox(width: 30, height: 20),
+                pw.Column(children: [
+                  pw.Text("Objekt"),
+                  pw.Image(image2, width: 250, height: 250),
+                ]),
+                pw.Column(children: [
+                  pw.Text("Bild 1"),
+                  pw.Image(image3, width: 250, height: 250),
+                ]),
+                pw.SizedBox(width: 30, height: 20),
+                pw.Column(children: [
+                  pw.Text("Bild-2"),
+                  pw.Image(image4, width: 250, height: 250),
+                ]),
+                pw.Column(children: [
+                  pw.Text("Bild 3"),
+                  pw.Image(image5, width: 250, height: 250),
+                ]),
+                pw.SizedBox(width: 30, height: 20),
+                pw.Column(children: [
+                  pw.Text("Bild 4"),
+                  pw.Image(image6, width: 250, height: 250),
+                ]),
               ]),
-
-
-
-
-            ]),
-
-
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Column(children: [
-                pw.Text("Material"),
-                pw.Image(image, width: 250, height: 250),
-              ]),
-              pw.SizedBox(width: 30, height: 20),
-              pw.Column(children: [
-                pw.Text("Objekt"),
-                pw.Image(image2, width: 250, height: 250),
-              ]),
-              pw.Column(children: [
-                pw.Text("Bild 1"),
-                pw.Image(image3, width: 250, height: 250),
-              ]),
-              pw.SizedBox(width: 30, height: 20),
-              pw.Column(children: [
-                pw.Text("Bild-2"),
-                pw.Image(image4, width: 250, height: 250),
-              ]),
-              pw.Column(children: [
-                pw.Text("Bild 3"),
-                pw.Image(image5, width: 250, height: 250),
-              ]),
-              pw.SizedBox(width: 30, height: 20),
-              pw.Column(children: [
-                pw.Text("Bild 4"),
-                pw.Image(image6, width: 250, height: 250),
-              ]),
-            ]),
+            ])
           ];
         }));
-    String id = "-MitPreis-";
-    await savePdf(id);
+
+    return savePdf(pdf);
   }
 
 /*   writeonPdfNull(String name, adresse, telefon, abholdatum, lieferdatum,
@@ -410,7 +408,7 @@ class HomeController extends GetxController {
     // ignore: avoid_print
   }
 
-  savePdf(String fileid) async {
+  savePdf(dynamic pdf) async {
     var now = DateTime.now();
     var formatterDate = DateFormat('dd_MM_yy');
     var formatterTime = DateFormat('kk_mm');
@@ -421,34 +419,16 @@ class HomeController extends GetxController {
 
     fileadress.replaceAll(r"\", "/");
     print(fileadress);
-    File file = File(fileadress + "${namet.text + actualDate + fileid}.pdf");
+    File file = File(fileadress + "${namet.text + actualDate}.pdf");
 
     file.writeAsBytesSync(List.from(await pdf.save()));
     print("PDF saved");
     await Printing.sharePdf(
         bytes: await pdf.save(),
-        filename: "${namet.text + actualDate + fileid}-P_Auftrag.pdf");
+        filename: "${namet.text + actualDate}-P_Auftrag.pdf");
+    print("PDF shared");
+    pdf.document.documentID.toString();
   }
-
-  /*  savePdf2() async {
-    var now = DateTime.now();
-    var formatterDate = DateFormat('dd_MM_yy');
-    var formatterTime = DateFormat('kk_mm');
-
-    String actualDate = "_" + formatterDate.format(now);
-    String actualTime = formatterTime.format(now);
-    String fileadress = depo.read("fileAdress") + "/";
-    fileadress.replaceAll(r"\", "/");
-    print(fileadress);
-    File file = File(fileadress +
-        "${namet.text + actualTime + actualDate} -OhnePreis- .pdf");
-
-    file.writeAsBytesSync(List.from(await pdf.save()));
-    print("PDF saved");
-    await Printing.sharePdf(
-        bytes: await pdf.save(),
-        filename: "${namet.text + actualTime + actualDate}-P_Auftrag.pdf");
-  } */
 
   @override
   Future<void> onInit() async {
