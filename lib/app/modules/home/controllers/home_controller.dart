@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,39 +23,42 @@ class HomeController extends GetxController {
   var now = DateTime.now();
   var formatterDate = DateFormat('dd/MM/yy');
   var formatterTime = DateFormat('kk:mm');
-
+  var photoSize1 = 0.0.obs;
+  var photoSize2 = 0.0.obs;
+  var photoSize3 = 0.0.obs;
+  var photoSize4 = 0.0.obs;
+  var photoSize5 = 0.0.obs;
+  var photoSize6 = 0.0.obs;
+  var temppreis = "".obs;
+  String dir = Directory.current.path;
+  late final logo = pw.MemoryImage(
+    File(dir + "/bild/logo.png").readAsBytesSync(),
+  );
   late var dosyaAdresi1 = "".obs;
   late var dosyaAdresi2 = "".obs;
   late var dosyaAdresi3 = "".obs;
-
   late var dosyaAdresi4 = "".obs;
-
   late var dosyaAdresi5 = "".obs;
   late var dosyaAdresi6 = "".obs;
-
   var directoryss = "".obs;
-
   TextEditingController namet = TextEditingController();
   TextEditingController adresset = TextEditingController();
   TextEditingController telefont = TextEditingController();
   TextEditingController abholdatumt = TextEditingController();
   TextEditingController lieferdatumt = TextEditingController();
   TextEditingController firmamaterialt = TextEditingController();
-
   TextEditingController bestelltt = TextEditingController();
   TextEditingController preist = TextEditingController();
   TextEditingController wasmachent = TextEditingController();
   TextEditingController notizt = TextEditingController();
-
   late final image = pw.MemoryImage(
     File(dosyaAdresi1.value).readAsBytesSync(),
   );
   late final image2 = pw.MemoryImage(
     File(dosyaAdresi2.value).readAsBytesSync(),
   );
-  late final image3 = pw.MemoryImage(
-    File(dosyaAdresi2.value).readAsBytesSync(),
-  );
+  late final image3 =
+      pw.MemoryImage(File(dosyaAdresi2.value).readAsBytesSync());
   late final image4 = pw.MemoryImage(
     File(dosyaAdresi2.value).readAsBytesSync(),
   );
@@ -68,18 +72,15 @@ class HomeController extends GetxController {
   getDirectory() async {
     if (depo.read('fileAdress') == null) {
       String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-
       if (selectedDirectory == null) {
         // User canceled the picker
       }
-
       String filepath = "";
       filepath = selectedDirectory.toString().replaceAll(r"\", "/");
       depo.write("fileAdress", filepath);
       print(filepath);
       //print(dosyaAdresi1.value);
     }
-
     String dir = Directory.current.path;
     print(dir);
     String bildadress = dir.replaceAll(r"\", "/");
@@ -89,7 +90,6 @@ class HomeController extends GetxController {
     dosyaAdresi4.value = bildadress + "/bild/bild2.png";
     dosyaAdresi5.value = bildadress + "/bild/bild2.png";
     dosyaAdresi6.value = bildadress + "/bild/bild2.png";
-
     print(dir);
     //print(dosyaAdresi1.value);
     //print(dosyaAdresi2.value);
@@ -97,7 +97,6 @@ class HomeController extends GetxController {
 
   editFileDirectory() async {
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-
     if (selectedDirectory == null) {
       // User canceled the picker
     }
@@ -107,26 +106,35 @@ class HomeController extends GetxController {
     print(filepath);
   }
 
-  writeonPdf(String name, adresse, telefon, abholdatum, lieferdatum,
-      firmamaterial, bestellt, preis, wasmachen, notiz) async {
+  writeonPdf(double gelen, String name, adresse, telefon, abholdatum,
+      lieferdatum, firmamaterial, bestellt, preis, wasmachen, notiz) async {
     final pdf = pw.Document();
     String actualDate = formatterDate.format(now);
     String actualTime = formatterTime.format(now);
-
     pdf.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(8),
         build: (pw.Context context) {
           return <pw.Widget>[
-            /*   pw.Watermark(
-              child: pw.Image(image2, width: 250, height: 250),
-            ), */
-            pw.Text(
+            pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Image(logo, width: 50, height: 50)),
+            pw.Header(
+              level: 0,
+              child: pw.Text(
+                "Polsterhof Auftrag+ $actualDate - $actualTime",
+                style: pw.TextStyle(
+                  fontSize: 20,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+            ),
+            /* pw.Text(
                 'Polsterhof-Auftragannahme ' + actualDate + "-" + actualTime,
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(
                   fontSize: 25,
-                )),
+                )), */
             pw.Row(children: [
               pw.Container(
                 width: 170,
@@ -159,7 +167,6 @@ class HomeController extends GetxController {
                     ]),
               ),
             ]),
-
 /* 
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Name:"),
@@ -181,7 +188,7 @@ class HomeController extends GetxController {
             pw.Text(bestellt.toString()),
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Preis:"),
-            pw.Text(preis.toString()),
+            pw.Text(temppreis.value.toString()),
             pw.Divider(thickness: 1),
             pw.Paragraph(text: "Was machen:"),
             pw.Text(wasmachen.toString()),
@@ -194,118 +201,41 @@ class HomeController extends GetxController {
               pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
                 pw.Column(children: [
                   pw.Text("Material"),
-                  pw.Image(image, width: 250, height: 250),
+                  pw.Image(image,
+                      width: photoSize1.value, height: photoSize1.value),
                 ]),
                 pw.SizedBox(width: 30, height: 20),
                 pw.Column(children: [
                   pw.Text("Objekt"),
-                  pw.Image(image2, width: 250, height: 250),
+                  pw.Image(image2,
+                      width: photoSize2.value, height: photoSize2.value),
                 ]),
               ]),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-                pw.Column(children: [
-                  pw.Text("Material"),
-                  pw.Image(image, width: 250, height: 250),
-                ]),
-                pw.SizedBox(width: 30, height: 20),
-                pw.Column(children: [
-                  pw.Text("Objekt"),
-                  pw.Image(image2, width: 250, height: 250),
-                ]),
-                pw.Column(children: [
-                  pw.Text("Bild 1"),
-                  pw.Image(image3, width: 250, height: 250),
-                ]),
-                pw.SizedBox(width: 30, height: 20),
-                pw.Column(children: [
-                  pw.Text("Bild-2"),
-                  pw.Image(image4, width: 250, height: 250),
-                ]),
-                pw.Column(children: [
-                  pw.Text("Bild 3"),
-                  pw.Image(image5, width: 250, height: 250),
-                ]),
-                pw.SizedBox(width: 30, height: 20),
-                pw.Column(children: [
-                  pw.Text("Bild 4"),
-                  pw.Image(image6, width: 250, height: 250),
-                ]),
-              ]),
-            ])
+              pw.Column(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: [
+                    pw.Row(children: [
+                      pw.Image(image3,
+                          width: photoSize3.value, height: photoSize3.value),
+                      pw.SizedBox(width: 30, height: 20),
+                      pw.Image(image4,
+                          width: photoSize4.value, height: photoSize4.value),
+                    ]),
+                    pw.Row(children: [
+                      pw.Image(image5,
+                          width: photoSize5.value, height: photoSize5.value),
+                      pw.SizedBox(width: 30, height: 20),
+                      pw.Image(image6,
+                          width: photoSize6.value, height: photoSize6.value),
+                    ])
+                  ]),
+            ]),
           ];
         }));
 
-    return savePdf(pdf);
+    return savePdf(pdf, gelen);
   }
 
-/*   writeonPdfNull(String name, adresse, telefon, abholdatum, lieferdatum,
-      firmamaterial, stoffmeter, leder, bestellt, wasmachen, notiz) async {
-    String actualDate = formatterDate.format(now);
-    String actualTime = formatterTime.format(now);
-
-    pdf.addPage(pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: pw.EdgeInsets.all(8),
-        build: (pw.Context context) {
-          return <pw.Widget>[
-            pw.Text('Polsterhof-Auftragannahme' + actualDate + "-" + actualTime,
-                textAlign: pw.TextAlign.center,
-                style: const pw.TextStyle(
-                  fontSize: 20,
-                )),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Name:"),
-            pw.Text(name.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Adresse:"),
-            pw.Text(adresse.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Telefon:"),
-            pw.Text(telefon.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Abholdatum - Lieferdatum:"),
-            pw.Text(abholdatum.toString() + lieferdatum.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Firma/Material:"),
-            pw.Text(firmamaterial.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Stoff-Meter:"),
-            pw.Text(stoffmeter.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Leder:"),
-            pw.Text(leder.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Bestellt am:"),
-            pw.Text(bestellt.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Was machen:"),
-            pw.Text(wasmachen.toString()),
-            pw.Divider(thickness: 1),
-            pw.Paragraph(text: "Notiz:"),
-            pw.Text(notiz.toString()),
-            pw.Divider(thickness: 1),
-            
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Image(image, width: 250, height: 250),
-              pw.SizedBox(width: 10),
-              pw.Image(image2, width: 250, height: 250),
-            ]),
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Image(image3, width: 250, height: 250),
-              pw.SizedBox(width: 10),
-              pw.Image(image4, width: 250, height: 250),
-            ]),
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-              pw.Image(image5, width: 250, height: 250),
-              pw.SizedBox(width: 10),
-              pw.Image(image6, width: 250, height: 250),
-            ]),
-          ];
-        }));
-    String id = "OhnePreis";
-    await savePdf(id);
-  }
- */
   getFileAdress() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -408,26 +338,99 @@ class HomeController extends GetxController {
     // ignore: avoid_print
   }
 
-  savePdf(dynamic pdf) async {
-    var now = DateTime.now();
-    var formatterDate = DateFormat('dd_MM_yy');
-    var formatterTime = DateFormat('kk_mm');
+  savePdf(dynamic pdf, double reciever) async {
+    if (reciever == 1) {
+      var now = DateTime.now();
+      var formatterDate = DateFormat('dd_MM_yy');
+      var formatterTime = DateFormat('kk_mm');
 
-    String actualDate = "_" + formatterDate.format(now);
-    String actualTime = formatterTime.format(now);
-    String fileadress = depo.read("fileAdress") + "/";
+      String actualDate = "_" + formatterDate.format(now);
+      String actualTime = formatterTime.format(now);
+      String fileadress = depo.read("fileAdress") + "/";
 
-    fileadress.replaceAll(r"\", "/");
-    print(fileadress);
-    File file = File(fileadress + "${namet.text + actualDate}.pdf");
+      fileadress.replaceAll(r"\", "/");
+      print(fileadress);
+      File file = File(fileadress + "${namet.text + actualDate}.pdf");
 
-    file.writeAsBytesSync(List.from(await pdf.save()));
-    print("PDF saved");
-    await Printing.sharePdf(
-        bytes: await pdf.save(),
-        filename: "${namet.text + actualDate}-P_Auftrag.pdf");
-    print("PDF shared");
-    pdf.document.documentID.toString();
+      file.writeAsBytesSync(List.from(await pdf.save()));
+      print("PDF saved");
+      await Printing.sharePdf(
+          bytes: await pdf.save(),
+          filename: "${namet.text + actualDate}-P_MitPreis.pdf");
+      print("PDF shared");
+
+      askPriceless();
+    } else if (reciever == 0) {
+      var now = DateTime.now();
+      var formatterDate = DateFormat('dd_MM_yy');
+      var formatterTime = DateFormat('kk_mm');
+
+      String actualDate = "_" + formatterDate.format(now);
+      String actualTime = formatterTime.format(now);
+      String fileadress = depo.read("fileAdress") + "/";
+
+      fileadress.replaceAll(r"\", "/");
+      print(fileadress);
+      File file = File(fileadress + "${namet.text + actualDate}.pdf");
+
+      file.writeAsBytesSync(List.from(await pdf.save()));
+      print("PDF saved mit Preis");
+      await Printing.sharePdf(
+          bytes: await pdf.save(),
+          filename: "${namet.text + actualDate}-P_OhnePreis.pdf");
+      photoSize1.value = 0;
+      photoSize2.value = 0;
+      photoSize3.value = 0;
+      photoSize4.value = 0;
+      photoSize5.value = 0;
+      photoSize6.value = 0;
+    }
+  }
+
+  askPriceless() {
+    Get.defaultDialog(
+        title: "Möchten Sie Ohne Preis auch Exportieren ?",
+        content: Row(
+          children: [
+            ElevatedButton(
+              child: const Text("Nein"),
+              onPressed: () {
+                namet.clear();
+                adresset.clear();
+                telefont.clear();
+                abholdatumt.clear();
+                lieferdatumt.clear();
+                firmamaterialt.clear();
+                bestelltt.clear();
+                wasmachent.clear();
+                notizt.clear();
+                preist.val("");
+                temppreis.value = "";
+                Get.back();
+              },
+            ),
+            const SizedBox(width: 10),
+            ElevatedButton(
+              child: const Text("Ja"),
+              onPressed: () {
+                temppreis.value = "";
+                writeonPdf(
+                    0,
+                    namet.text,
+                    adresset.text,
+                    telefont.text,
+                    abholdatumt.text,
+                    lieferdatumt.text,
+                    firmamaterialt.text,
+                    bestelltt.text,
+                    temppreis.value,
+                    wasmachent.text,
+                    notizt.text);
+                Get.back();
+              },
+            ),
+          ],
+        ));
   }
 
   @override

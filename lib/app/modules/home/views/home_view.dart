@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:polsterhof_auftrag/main.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -22,61 +23,79 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Auftragsannahme",
-                  style: TextStyle(fontSize: 40),
+                Column(
+                  children: [
+                    /* Row(
+                      children: [
+                        TextButton(
+                          child: Text("Briefkopf\n Vorlage"),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ), */
+                    Image.asset(
+                      "assets/logo.png",
+                      width: 100,
+                      height: 100,
+                      scale: 0.1,
+                    ),
+                    const Text(
+                      "Auftragsannahme",
+                      style: TextStyle(fontSize: 40),
+                    ),
+                  ],
                 ),
                 TextFormField(
                   controller: controller.namet,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Name:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.adresset,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Adresse:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.telefont,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Telefon:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.abholdatumt,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Abholdatum:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.lieferdatumt,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Lieferdatum:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.firmamaterialt,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Material:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.bestelltt,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Bestellt am:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.preist,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Preis:",
                   ),
                 ),
                 TextFormField(
                   controller: controller.wasmachent,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Was machen:",
                   ),
                 ),
@@ -96,34 +115,39 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           InkWell(
                             onTap: () {
+                              controller.photoSize1.value = 250;
                               controller.getFileAdress();
+                              print(controller.dosyaAdresi1.value);
+                              print(controller.photoSize1.value);
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Material"),
+                                    const Text("Material"),
                                     Image.file(
                                       File(controller.dosyaAdresi1.value),
+
                                       height: Get.height * 0.2,
+                                      //height: Get.height * 0.2,
                                       width: Get.width * 0.2,
                                     ),
                                   ],
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 40,
                           ),
                           InkWell(
                             onTap: () {
+                              controller.photoSize2.value = 250;
                               controller.getFileAdress2();
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Objekt"),
+                                    const Text("Objekt"),
                                     Image.file(
-                                      File(controller.dosyaAdresi2.value),
-                                      height: Get.height * 0.2,
-                                      width: Get.width * 0.2,
-                                    ),
+                                        File(controller.dosyaAdresi2.value),
+                                        height: Get.height * 0.2,
+                                        width: Get.width * 0.2),
                                   ],
                                 )),
                           ),
@@ -134,29 +158,35 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           InkWell(
                             onTap: () {
+                              controller.photoSize3.value = 250;
                               controller.getFileAdress3();
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Bild 1"),
+                                    const Text("Bild 1"),
                                     Image.file(
+                                        File(controller.dosyaAdresi3.value),
+                                        height: Get.height * 0.2,
+                                        width: Get.width * 0.2),
+                                    /* Image.file(
                                       File(controller.dosyaAdresi3.value),
                                       height: Get.height * 0.2,
                                       width: Get.width * 0.2,
-                                    ),
+                                    ), */
                                   ],
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 40,
                           ),
                           InkWell(
                             onTap: () {
+                              controller.photoSize4.value = 250;
                               controller.getFileAdress4();
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Bild 2"),
+                                    const Text("Bild 2"),
                                     Image.file(
                                       File(controller.dosyaAdresi4.value),
                                       height: Get.height * 0.2,
@@ -172,11 +202,12 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           InkWell(
                             onTap: () {
+                              controller.photoSize5.value = 250;
                               controller.getFileAdress5();
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Bild 3"),
+                                    const Text("Bild 3"),
                                     Image.file(
                                       File(controller.dosyaAdresi5.value),
                                       height: Get.height * 0.2,
@@ -185,16 +216,17 @@ class HomeView extends GetView<HomeController> {
                                   ],
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 40,
                           ),
                           InkWell(
                             onTap: () {
+                              controller.photoSize6.value = 250;
                               controller.getFileAdress6();
                             },
                             child: Obx(() => Column(
                                   children: [
-                                    Text("Bild 4"),
+                                    const Text("Bild 4"),
                                     Image.file(
                                       File(controller.dosyaAdresi6.value),
                                       height: Get.height * 0.2,
@@ -220,12 +252,12 @@ class HomeView extends GetView<HomeController> {
               ), */
                 Column(
                   children: [
-                    Text("Zielordner \n Ändern"),
+                    const Text("Zielordner \n Ändern"),
                     IconButton(
                         onPressed: (() {
                           controller.editFileDirectory();
                         }),
-                        icon: Icon(Icons.file_open_rounded)),
+                        icon: const Icon(Icons.file_open_rounded)),
                   ],
                 ),
               ],
@@ -234,7 +266,9 @@ class HomeView extends GetView<HomeController> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            controller.temppreis.value = controller.preist.text;
             await controller.writeonPdf(
+              1,
               controller.namet.text,
               controller.adresset.text,
               controller.telefont.text,
@@ -284,7 +318,7 @@ class HomeView extends GetView<HomeController> {
             ); */
           },
 
-          child: Icon(Icons.save),
+          child: const Icon(Icons.save),
           //Test
         ));
   }
