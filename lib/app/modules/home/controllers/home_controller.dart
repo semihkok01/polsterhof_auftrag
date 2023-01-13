@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,6 +69,7 @@ class HomeController extends GetxController {
   late final image6 = pw.MemoryImage(
     File(dosyaAdresi2.value).readAsBytesSync(),
   );
+  var FilePathAdress = "".obs;
 
   getDirectory() async {
     if (depo.read('fileAdress') == null) {
@@ -90,6 +92,7 @@ class HomeController extends GetxController {
     dosyaAdresi4.value = bildadress + "/bild/bild2.png";
     dosyaAdresi5.value = bildadress + "/bild/bild2.png";
     dosyaAdresi6.value = bildadress + "/bild/bild2.png";
+    FilePathAdress.value = bildadress + "/bild/bild2.png";
     print(dir);
     //print(dosyaAdresi1.value);
     //print(dosyaAdresi2.value);
@@ -122,7 +125,7 @@ class HomeController extends GetxController {
             pw.Header(
               level: 0,
               child: pw.Text(
-                "Polsterhof Auftrag+ $actualDate - $actualTime",
+                "Polsterhof Auftrag $actualDate - $actualTime",
                 style: pw.TextStyle(
                   fontSize: 20,
                   fontWeight: pw.FontWeight.bold,
@@ -142,8 +145,15 @@ class HomeController extends GetxController {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
-                      pw.Paragraph(text: "Name:"),
-                      pw.Text(name.toString()),
+                      pw.Paragraph(
+                          text: "Name",
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
+                      pw.Text(name.toString(),
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
                     ]),
               ),
               pw.Container(
@@ -152,8 +162,15 @@ class HomeController extends GetxController {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
-                      pw.Paragraph(text: "Adresse:"),
-                      pw.Text(adresse.toString()),
+                      pw.Paragraph(
+                          text: "Adresse",
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
+                      pw.Text(adresse.toString(),
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
                     ]),
               ),
               pw.Container(
@@ -162,8 +179,15 @@ class HomeController extends GetxController {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
-                      pw.Paragraph(text: "Telefon:"),
-                      pw.Text(telefon.toString()),
+                      pw.Paragraph(
+                          text: "Telefon",
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
+                      pw.Text(telefon.toString(),
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex("#fe0003"))),
                     ]),
               ),
             ]),
@@ -234,6 +258,11 @@ class HomeController extends GetxController {
         }));
 
     return savePdf(pdf, gelen);
+  }
+
+  deleteFile(dynamic gelen) {
+    gelen = FilePathAdress;
+    update();
   }
 
   getFileAdress() async {

@@ -9,12 +9,7 @@ import 'app/routes/app_pages.dart';
 
 main() async {
    await GetStorage.init();
-  try {
-    var response = await Dio().get('http://kkspro.de/license/license');
-    //print(response);
-    print(response.data);
-    String mesaj = response.toString();
-    if (mesaj == "true") {
+
       runApp(
         GetMaterialApp(
           debugShowCheckedModeBanner: false,
@@ -23,12 +18,5 @@ main() async {
           getPages: AppPages.routes,
         ),
       );
-      print("License Valid");
-    } else {
-      Get.offAllNamed(Routes.FEHLER);
-      print("License Invalid");
-    }
-  } catch (e) {
-    print(e);
-  }
+    
 }

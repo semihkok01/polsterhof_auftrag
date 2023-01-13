@@ -123,6 +123,13 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Material"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi1);
+                                          controller.photoSize1 = 0.0.obs;
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                       File(controller.dosyaAdresi1.value),
 
@@ -144,6 +151,14 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Objekt"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.photoSize2 = 0.0.obs;
+
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi2);
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                         File(controller.dosyaAdresi2.value),
                                         height: Get.height * 0.2,
@@ -164,6 +179,13 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Bild 1"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.photoSize3 = 0.0.obs;
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi3);
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                         File(controller.dosyaAdresi3.value),
                                         height: Get.height * 0.2,
@@ -187,6 +209,13 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Bild 2"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.photoSize4 = 0.0.obs;
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi4);
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                       File(controller.dosyaAdresi4.value),
                                       height: Get.height * 0.2,
@@ -208,6 +237,13 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Bild 3"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.photoSize5 = 0.0.obs;
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi5);
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                       File(controller.dosyaAdresi5.value),
                                       height: Get.height * 0.2,
@@ -227,6 +263,13 @@ class HomeView extends GetView<HomeController> {
                             child: Obx(() => Column(
                                   children: [
                                     const Text("Bild 4"),
+                                    IconButton(
+                                        onPressed: (() {
+                                          controller.photoSize6 = 0.0.obs;
+                                          controller.deleteFile(
+                                              controller.dosyaAdresi6);
+                                        }),
+                                        icon: const Icon(Icons.delete)),
                                     Image.file(
                                       File(controller.dosyaAdresi6.value),
                                       height: Get.height * 0.2,
